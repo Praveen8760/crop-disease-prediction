@@ -2,8 +2,11 @@ const express = require('express');
 const router = express.Router();
 const { GoogleGenerativeAI } = require('@google/generative-ai');
 
+
+const chatKEY=process.env.GOOGLE_API_KEY;
+
 // Initialize Google Generative AI
-const genAI = new GoogleGenerativeAI("AIzaSyC-YTdEw9qpcPQmt9Gq2S476u_ANofEtB0");
+const genAI = new GoogleGenerativeAI(chatKEY);
 const model = genAI.getGenerativeModel({ model: "gemini-1.5-flash" });
 
 // Function to check if the prompt is related to agriculture or farming

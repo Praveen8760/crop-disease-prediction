@@ -11,6 +11,10 @@ const session = require('express-session');
 const {exec}=require('child_process')
 const {readFile}=require('fs')
 
+require('dotenv').config();
+
+
+
 
 // ai import
 const { loadTFLiteModel } = require('tfjs-tflite-node');
@@ -63,7 +67,7 @@ app.use(bodyParser.urlencoded({ extended: true }));
 app.use(express.urlencoded({ extended: true }));
 app.use(cookieParser("Agriculture_AI_System"));
 app.use(session({
-    secret: "Auction_system",
+    secret: "Agriculture AI",
     saveUninitialized: true,
     resave: true,
     cookie: {
@@ -80,7 +84,7 @@ app.use('/', predict);
 // loaction
 async function getLocation() {
     // Use an IP-based geolocation service
-    const response = await fetch('https://ipinfo.io/json?token=5685227d964c08'); // Replace with your IPinfo token
+    const response = await fetch('https://ipinfo.io/json?token=5685227d964c08'); 
     const data = await response.json();
     
     const [lat, lon] = data.loc ? data.loc.split(',') : [null, null];
@@ -92,7 +96,7 @@ async function getLocation() {
 }
 
 async function getWeather(city) {
-    const apiKey = '5f2240019f7b71a7a89218452413b9d3'; // Replace with your OpenWeatherMap API key
+    const apiKey = process.env.OPEN_WEATHER_KEY ; 
     const response = await fetch(`https://api.openweathermap.org/data/2.5/weather?q=${city}&appid=${apiKey}&units=metric`);
 
     if (!response.ok) {
