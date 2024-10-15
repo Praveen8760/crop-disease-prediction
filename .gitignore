@@ -3,3 +3,4 @@ node_modules/
 
 # Ignore machine learning models
 ml_model/
+.vercel
