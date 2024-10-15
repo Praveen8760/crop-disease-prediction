@@ -1,0 +1,147 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+
+    <link rel="stylesheet" href="/css/output.css">
+    <link rel="stylesheet" href="/css/translate.css">
+    <script src="https://cdn.jsdelivr.net/gh/alpinejs/alpine@v2.x.x/dist/alpine.min.js" defer></script>
+    <script src="https://unpkg.com/flowbite@1.6.5/dist/flowbite.min.js"></script>
+
+
+</head>
+<body class="bg-white-base">
+
+    <nav class="bg-white fixed w-full top-0 z-20">
+        <div class="max-w-screen-xl flex flex-wrap items-center justify-between mx-auto p-4">
+            <a href="https://flowbite.com/" class="flex items-center space-x-9 rtl:space-x-reverse">
+                <img src="/brand_icon.svg" class="h-auto w-auto lg:w-auto lg:h-auto" alt="Flowbite Logo" />
+            </a>
+            <div class="flex items-center justify-center">
+                <div class="translate-container">
+                    <img src="/translate_icon.svg" alt="Translate Icon" onclick="toggleTranslate()" class="translate-icon" />
+                    
+                    <div id="google_element" class="translate-widget w-auto" style="display: none;">
+                        <!-- Google Translate widget or content -->
+                    </div>
+                </div>                
+            </div>
+        </div>
+    </nav>
+
+    <div class="m-6 mt-10">
+        <a href="/" class="p-4">
+            <img src="back_arrow.svg" alt="back">
+        </a>
+        <h1 class="text-primary font-semibold text-destop-h1">Soil Health Report</h1>
+
+    <% if (result_json.error.length > 0) { %>
+        <div class="p-4 mb-4 text-sm text-red-800 rounded-lg bg-red-200" role="alert">
+            <h2 class="mb-5 text-destop-h3 font-semibold text-dark">Failed Parameters</h2>
+            <h2 class="text-destop-h4 mb-2 font-medium"><%= result_json.error.join(", ") %></h2>
+            <p class="text-destop-h3">Fix the physical values of these to ensure healthy soil conditions.</p>
+        </div>
+    <% } else { %>
+        <h2>No errors found.</h2>
+    <% } %>
+
+    <div class="overflow-x-auto">
+        <table class="overflow-auto min-w-full table-fixed border bg-white border-gray rounded-lg border-separate" style="border-spacing: 0;">
+          <thead class="text-center text-mobile-h4 lg:text-destop-h4 font-Custom">
+            <tr class="h-14">
+              <th class="w-96 px-4 py-2 border-r border-b border-dark-grey text-dark font-bold">
+                Parameter
+              </th>
+              <th class="w-96 px-4 py-2 border-r border-b border-dark-grey text-dark font-bold">
+                value
+              </th>
+            </tr>
+          </thead>
+          <tbody class="text-center text-mobile-p lg:text-destop-p font-Custom">
+                <tr class="py-2 border-r border-gray-400">
+                    <td class="px-4 py-2 border-r border-dark-grey">Nitrogen</td>
+                    <td class="px-4 py-2 border-r border-dark-grey"><%= result_json.nitrogen %></td>
+                </tr>
+                <tr class="py-2 border-r border-gray-400">
+                    <td class="px-4 py-2 border-r border-dark-grey">Phosphorus</td>
+                    <td class="px-4 py-2 border-r border-dark-grey" class="px-4 py-2 border-r border-dark-grey"><%= result_json.phosphorus %></td>
+                </tr>
+                <tr class="py-2 border-r border-gray-400">
+                    <td class="px-4 py-2 border-r border-dark-grey">Potassium</td>
+                    <td class="px-4 py-2 border-r border-dark-grey"><%= result_json.potassium %></td>
+                </tr>
+                <tr class="py-2 border-r border-gray-400">
+                    <td class="px-4 py-2 border-r border-dark-grey">Organic Matter</td>
+                    <td class="px-4 py-2 border-r border-dark-grey"><%= result_json.organicMatter %></td>
+                </tr>
+                <tr class="py-2 border-r border-gray-400">
+                    <td class="px-4 py-2 border-r border-dark-grey">Moisture</td>
+                    <td class="px-4 py-2 border-r border-dark-grey"><%= result_json.moisture %></td>
+                </tr>
+                <tr class="py-2 border-r border-gray-400">
+                    <td class="px-4 py-2 border-r border-dark-grey">Bulk Density</td>
+                    <td class="px-4 py-2 border-r border-dark-grey"><%= result_json.bulkDensity %></td>
+                </tr>
+                <tr class="py-2 border-r border-gray-400">
+                    <td class="px-4 py-2 border-r border-dark-grey">Microbial Activity</td>
+                    <td class="px-4 py-2 border-r border-dark-grey"><%= result_json.microbialActivity %></td>
+                </tr>
+                <tr class="py-2 border-r border-gray-400">
+                    <td class="px-4 py-2 border-r border-dark-grey">EC</td>
+                    <td class="px-4 py-2 border-r border-dark-grey"><%= result_json.ec %></td>
+                </tr>
+                <tr class="py-2 border-r border-gray-400">
+                    <td class="px-4 py-2 border-r border-dark-grey">Infiltration</td>
+                    <td class="px-4 py-2 border-r border-dark-grey"><%= result_json.infiltration %></td>
+                </tr>
+                <tr class="py-2 border-r border-gray-400">
+                    <td class="px-4 py-2 border-r border-dark-grey">Temperature</td>
+                    <td class="px-4 py-2 border-r border-dark-grey"><%= result_json.temperature %></td>
+                </tr>
+                <tr class="py-2 border-r border-gray-400">
+                    <td class="px-4 py-2 border-r border-dark-grey">Compaction</td>
+                    <td class="px-4 py-2 border-r border-dark-grey"><%= result_json.compaction %></td>
+                </tr>
+                <tr class="py-2 border-r border-gray-400">
+                    <td class="px-4 py-2 border-r border-dark-grey">Cation</td>
+                    <td class="px-4 py-2 border-r border-dark-grey"><%= result_json.cation %></td>
+                </tr>
+                <tr class="py-2 border-r border-gray-400">
+                    <td class="px-4 py-2 border-r border-dark-grey">Heavy Metals</td>
+                    <td class="px-4 py-2 border-r border-dark-grey"><%= result_json.heavyMetals %></td>
+                </tr>
+            </tbody>
+        </table>
+    </div>
+    </div>
+
+    
+    
+    
+    <script>
+        function toggleTranslate() {
+            const googleElement = document.getElementById('google_element');
+            if (googleElement.style.display === 'none') {
+                googleElement.style.display = 'block';  // Show the translate element
+            } else {
+                googleElement.style.display = 'none';   // Hide the translate element
+            }
+        }
+    </script>
+    
+    <script src="https://translate.google.com/translate_a/element.js?cb=loadGoogleTranslate"></script>
+    <script>
+        function loadGoogleTranslate(){
+            new google.translate.TranslateElement(
+                "google_element"
+            );
+        }
+    </script>
+    <script>
+        window.onload = loadGoogleTranslate;
+    </script>
+
+</body>
+</html>

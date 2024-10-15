@@ -1,0 +1,41 @@
+.skiptranslate iframe {
+    visibility: hidden !important; 
+    z-index: -1;
+}
+.VIpgJd-ZVi9od-l4eHX-hSRGPd {
+    visibility: hidden;
+}
+
+body {
+    background-color: black;
+}
+h1 {
+    color: white;
+}
+p {
+    color: white;
+}
+.goog-te-gadget {
+    visibility: hidden !important;
+}
+.goog-te-combo {
+    visibility: visible !important;
+}
+
+.translate-container {
+    display: flex;
+    align-items: center;
+    gap: 10px; /* Adjust the gap between the icon and the div */
+}
+
+.translate-icon {
+    cursor: pointer;
+    width: 24px;
+    height: 24px;
+}
+
+.translate-widget {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}

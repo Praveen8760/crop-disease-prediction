@@ -1,0 +1,128 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+
+    <link rel="stylesheet" href="/css/output.css">
+    <link rel="stylesheet" href="/css/translate.css">
+    <script src="https://cdn.jsdelivr.net/gh/alpinejs/alpine@v2.x.x/dist/alpine.min.js" defer></script>
+    <script src="https://unpkg.com/flowbite@1.6.5/dist/flowbite.min.js"></script>
+
+
+
+</head>
+<body class="bg-white-base">
+
+
+    <nav class="bg-white fixed w-full top-0 z-20">
+        <div class="max-w-screen-xl flex flex-wrap items-center justify-between mx-auto p-4">
+            <a href="https://flowbite.com/" class="flex items-center space-x-9 rtl:space-x-reverse">
+                <img src="/brand_icon.svg" class="h-auto w-auto lg:w-auto lg:h-auto" alt="Flowbite Logo" />
+            </a>
+            <div class="flex items-center justify-center">
+                <div class="translate-container">
+                    <img src="/translate_icon.svg" alt="Translate Icon" onclick="toggleTranslate()" class="translate-icon" />
+                    
+                    <div id="google_element" class="translate-widget w-auto" style="display: none;">
+                        <!-- Google Translate widget or content -->
+                    </div>
+                </div>                
+            </div>
+        </div>
+    </nav>
+
+    <div class="mx-6 mt-20">
+        <a href="/" class="p-4">
+            <img src="back_arrow.svg" alt="back">
+        </a>
+        <h1 class="text-primary font-semibold text-destop-h1">Soil Crop Analysis Report</h1>
+
+        <div class="p-4 mb-4 text-sm bg-white rounded-lg" role="alert">
+            <h2 class="mb-5 text-destop-h3 font-semibold text-dark">Best Crop to be planted in given Environmental and Soil Conditions</h2>
+            <h2 class="text-destop-h3 font-medium text-secondary"><%= crop_data.cropType %></h2>
+            
+        </div>
+    
+        <h1 class="text-secondary font-semibold text-destop-h2">Report</h1>
+        <div class="overflow-x-auto">
+            <table class="overflow-auto min-w-full table-fixed border bg-white border-gray rounded-lg border-separate" style="border-spacing: 0;">
+              <thead class="text-center text-mobile-h4 lg:text-destop-h4 font-Custom">
+                <tr class="h-14">
+                  <th class="w-96 px-4 py-2 border-r border-b border-dark-grey text-dark font-bold">
+                    Parameter
+                  </th>
+                  <th class="w-96 px-4 py-2 border-r border-b border-dark-grey text-dark font-bold">
+                    value
+                  </th>
+                </tr>
+              </thead>
+              <tbody class="text-center text-mobile-p lg:text-destop-p font-Custom">
+                    <tr class="py-2 border-r border-gray-400">
+                        <td class="px-4 py-2 border-r border-dark-grey">Nitrogen</td>
+                        <td class="px-4 py-2 border-r border-dark-grey"><%= crop_data.nitrogen %></td>
+                    </tr>
+                    <tr class="py-2 border-r border-gray-400">
+                        <td class="px-4 py-2 border-r border-dark-grey">Phosphorus</td>
+                        <td class="px-4 py-2 border-r border-dark-grey" class="px-4 py-2 border-r border-dark-grey"><%= crop_data.phosphorus %></td>
+                    </tr>
+                    <tr class="py-2 border-r border-gray-400">
+                        <td class="px-4 py-2 border-r border-dark-grey">Potassium</td>
+                        <td class="px-4 py-2 border-r border-dark-grey"><%= crop_data.potassium %></td>
+                    </tr>
+                    <tr class="py-2 border-r border-gray-400">
+                        <td class="px-4 py-2 border-r border-dark-grey">Temperature</td>
+                        <td class="px-4 py-2 border-r border-dark-grey"><%= crop_data.temperature %></td>
+                    </tr>
+                    <tr class="py-2 border-r border-gray-400">
+                        <td class="px-4 py-2 border-r border-dark-grey">Humidity</td>
+                        <td class="px-4 py-2 border-r border-dark-grey"><%= crop_data.humidity %></td>
+                    </tr>
+                    <tr class="py-2 border-r border-gray-400">
+                        <td class="px-4 py-2 border-r border-dark-grey">pH level</td>
+                        <td class="px-4 py-2 border-r border-dark-grey"><%= crop_data.pHlevel %></td>
+                    </tr>
+                    <tr class="py-2 border-r border-gray-400">
+                        <td class="px-4 py-2 border-r border-dark-grey">Rainfall</td>
+                        <td class="px-4 py-2 border-r border-dark-grey"><%= crop_data.rainfall %></td>
+                    </tr>
+                    <tr class="py-2 border-r border-gray-400">
+                        <td class="px-4 py-2 border-r border-dark-grey">Crop Rotation</td>
+                        <td class="px-4 py-2 border-r border-dark-grey"><%= crop_data.cropRotation %></td>
+                    </tr>
+                    <tr class="py-2 border-r border-gray-400">
+                        <td class="px-4 py-2 border-r border-dark-grey">Soil Quality</td>
+                        <td class="px-4 py-2 border-r border-dark-grey"><%= crop_data.soilQuality %></td>
+                    </tr>
+                </tbody>
+            </table>
+        </div>
+    </div>
+    
+
+    <script>
+        function toggleTranslate() {
+            const googleElement = document.getElementById('google_element');
+            if (googleElement.style.display === 'none') {
+                googleElement.style.display = 'block';  // Show the translate element
+            } else {
+                googleElement.style.display = 'none';   // Hide the translate element
+            }
+        }
+    </script>
+    
+    <script src="https://translate.google.com/translate_a/element.js?cb=loadGoogleTranslate"></script>
+    <script>
+        function loadGoogleTranslate(){
+            new google.translate.TranslateElement(
+                "google_element"
+            );
+        }
+    </script>
+    <script>
+        window.onload = loadGoogleTranslate;
+    </script>
+
+</body>
+</html>

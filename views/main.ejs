@@ -1,0 +1,372 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Agrios</title>
+
+    <link rel="stylesheet" href="/css/output.css">
+    <link rel="stylesheet" href="/css/chat.css">
+    <link rel="stylesheet" href="/css/translate.css">
+    <link rel="stylesheet" href="/css/scroll.css">
+
+    <script src="https://cdn.jsdelivr.net/gh/alpinejs/alpine@v2.x.x/dist/alpine.min.js" defer></script>
+    <script src="https://unpkg.com/flowbite@1.6.5/dist/flowbite.min.js"></script>
+    
+
+    <script src="/js/chat_box.js" defer></script>
+</head>
+<body class="bg-white-base">
+
+    <!-- navbar -->
+    <nav class="bg-white fixed w-full top-0 z-20">
+        <div class="max-w-screen-xl flex flex-wrap items-center justify-between mx-auto p-4">
+            <a href="https://flowbite.com/" class="flex items-center space-x-9 rtl:space-x-reverse">
+                <img src="/brand_icon.svg" class="h-auto w-auto lg:w-auto lg:h-auto" alt="Flowbite Logo" />
+            </a>
+            <div class="flex items-center justify-center">
+                <div class="translate-container">
+                    <img src="/translate_icon.svg" alt="Translate Icon" onclick="toggleTranslate()" class="translate-icon" />
+                    
+                    <div id="google_element" class="translate-widget w-auto" style="display: none;">
+                        <!-- Google Translate widget or content -->
+                    </div>
+                </div>                
+            </div>
+        </div>
+    </nav>
+
+    <!-- hero section -->
+    <section class="relative mt-8 bg-center bg-no-repeat bg-cover min-h-screen" style="background-image: url('/main_bg.svg');">    
+        <div class="flex flex-col px-4 justify-start items-start mx-auto max-w-screen-xl py-12 lg:py-20 relative z-10"> <!-- Adjusted padding -->
+            <div class="mt-0 mb-3 lg:mb-12"> <!-- Set margin-top to 0 to place it at the top -->
+                <h1 class="mb-4 text-4xl font-extrabold tracking-tight text-primary md:text-5xl lg:text-destop-h1">Next-Gen Farming Solutions</h1>
+                <h1 class="mb-6 text-lg font-semibold leading-[50px] w-full text-secondary lg:text-destop-h2 lg:w-8/12">AI-Powered Insights for a Sustainable Tomorrow</h1>
+            </div>
+            <div class="flex flex-col justify-start items-start w-3/6 lg:w-full space-y-0 lg:space-y-2">
+                <a href="#main" class="inline-flex justify-center items-center py-3 px-5 text-base font-medium text-center text-dark rounded-lg bg-secondary hover:bg-secondary focus:ring-4 focus:bg-yellow-600">
+                    Discover More
+                    <svg class="w-3.5 h-3.5 ms-2 rtl:rotate-180" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 14 10">
+                        <path stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M1 5h12m0 0L9 1m4 4L9 9"/>
+                    </svg>
+                </a>
+            </div>
+        </div>
+    </section>
+
+    <!-- chat bot icon -->
+    <button class="chatbot-toggler">
+        <span class="material-symbols-rounded">AI</span>
+        <span class="material-symbols-outlined">X</span>
+    </button>
+    <div class="chatbot">
+        <header>
+          <h2>Plant Pal</h2>
+          <span class="close-btn material-symbols-outlined"></span>
+        </header>
+        <ul class="chatbox">
+          <li class="chat incoming">
+            <span class="material-symbols-outlined">AI</span>
+            <p>Hi there! <br>I'm Plant Pal. How can I assist you today?</p>
+          </li>
+        </ul>
+        <div class="chat-input">
+          <textarea placeholder="Enter a message..." spellcheck="false" required></textarea>
+          <span id="send-btn" class="material-symbols-rounded">send</span>
+        </div>
+    </div>
+
+    <!-- main -->
+    <main class="mx-4 lg:mx-[36px]">
+        <div>
+            <h1 class="text-primary font-bold text-mobile-h1 lg:text-destop-h1">Our AI Powered Tools</h1>
+        </div>
+                
+        <ul id="tabs" class="hidden text-sm font-medium text-center text-dark rounded-desktop-form shadow sm:flex grid-cols-2 gap-2 sm:grid-cols-none">
+            <li class="w-full focus-within:z-10">
+                <a href="#" data-target="predictAI" class="tab-link inline-block w-full p-4 text-gray-900 bg-secondary border-r border-gray-200 rounded-s-lg" aria-current="page">Field Guardian</a>
+            </li>
+            <li class="w-full focus-within:z-10">
+                <a href="#" data-target="invoice" class="tab-link inline-block w-full p-4 bg-gray-200 border-r border-white hover:text-gray-700 hover:bg-gray-50">Soil Sense</a>
+            </li>
+            <li class="w-full focus-within:z-10">
+                <a href="#" data-target="data" class="tab-link inline-block w-full p-4 bg-gray-200 border-r border-white hover:text-gray-700 hover:bg-gray-50">Grow Smart</a>
+            </li>
+            <li class="w-full focus-within:z-1" id="price">
+                <a href="#" data-target="dat" class="tab-link inline-block w-full p-4 bg-gray-200 border-r border-white hover:text-gray-700 hover:bg-gray-50">Today Crop Price</a>
+            </li>
+        </ul>
+        
+        <!-- predict AI -->
+
+        <div id="predictAI" class="tab-content h-60 grid grid-cols-1 gap-2 lg:grid-cols-12"> 
+            <div class="col-span-6">
+                <form id="predictionForm" action="/your-endpoint" method="POST" enctype="multipart/form-data" class="mt-8">
+                    <div class="flex items-center justify-center w-full">
+                        <label for="dropzone-file" class="flex flex-col items-center justify-center w-full h-64 border-2 border-primary border-dashed rounded-lg cursor-pointer bg-gray-50 hover:bg-gray-100">
+                            <div class="flex flex-col items-center justify-center pt-5 pb-6">
+                                <svg class="w-8 h-8 mb-4 text-primary" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 20 16">
+                                    <path stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M13 13h3a3 3 0 0 0 0-6h-.025A5.56 5.56 0 0 0 16 6.5 5.5 5.5 0 0 0 5.207 5.021C5.137 5.017 5.071 5 5 5a4 4 0 0 0 0 8h2.167M10 15V6m0 0L8 8m2-2 2 2"/>
+                                </svg>
+                                <p class="mb-2 text-sm text-gray-500"><span class="font-semibold">Click to upload</span> or drag and drop</p>
+                                <p class="text-xs text-gray-500">SVG, PNG, JPG or GIF (MAX. 800x400px)</p>
+                            </div>
+                            <input id="dropzone-file" type="file" name="image" class="hidden" accept="image/*" required/>
+                        </label>
+                    </div>
+                    <div class="flex justify-center mt-4">
+                        <button id="predictBtn" type="submit" class="inline-flex w-3/6 justify-center items-center py-3 px-5 text-base font-medium text-black rounded-lg bg-secondary hover:bg-secondary">Submit</button>
+                    </div>
+                </form>
+            </div>
+        
+            <div class="col-span-6 mb-20 h-[320px] mt-6 p-4 bg-white flex flex-col items-start justify-start rounded-lg overflow-y-auto">
+                <h3 class="text-destop-h2 font-semibold text-primary">Prediction</h3>
+                <div id="prediction-result" class="text-gray-700 w-full">
+                    <% if (ai_result) { %>
+                        <div class="mb-5 flex justify-start items-center">
+                            <a href="#Description" class="bg-secondary px-3 py-2 text-dark text-mobile-p font-medium me-2 rounded-full">Description</a>
+                            <a href="#precautions" class="bg-secondary px-3 py-2 text-dark text-mobile-p font-medium me-2 rounded-full">Precaution</a>
+                            <a href="#cures" class="bg-secondary px-3 py-2 text-dark text-mobile-p font-medium me-2 rounded-full">Cures</a>
+                        </div>
+                        <h1 class="text-destop-h4 text-dark"><span class="text-destop-h4 text-red-500 font-semibold">Disease Name: </span><%= ai_result.name %></h1>
+                        <div id="Description" class="text-secondary text-destop-h3 font-semibold">Description</div>
+                        <div class="text-dark text-[18px] mb-2"><%= ai_result.description %></div>
+                    
+                        <div class="text-secondary text-destop-h3 font-semibold" id="precautions">Precautions</div>
+                        <ul class="ms-4 text-dark text-[18px] mb-2">
+                            <% ai_result.precautions.forEach(function(precaution) { %>
+                                <li class="list-disc"><%= precaution %></li>
+                            <% }); %>
+                        </ul>
+                    
+                        <h2 class="text-secondary text-destop-h3 font-semibold" id="cures">Cures</h2>
+                        <ul class="ms-4 text-dark text-[18px] mb-2">
+                            <% ai_result.cure.forEach(function(cure) { %>
+                                <li class="list-disc"><%= cure %></li>
+                            <% }); %>
+                        </ul>
+                    <% } else { %>
+                        <p class="text-center">No prediction data available.</p>
+                    <% } %>
+                </div>                            
+            </div>
+        </div>
+
+        <!-- Invoice Content -->
+        <div id="invoice" class="tab-content hidden">
+            <div class="grid grid-cols-1 mt-5 gap-3">
+                <div class="grid-cols-12 p-5">
+                    <form action="/soilhealth" method="post">
+                        <div class="grid gap-6 mb-6 md:grid-cols-3">
+                            <div>
+                                <label for="first_name" class="block mb-2 text-sm font-medium text-gray-900">Enter pH Value</label>
+                                <input step="0.01" required type="number" name="pHValue" class="w-full font-Custom py-[10px] px-[8px] border-2 border-dark-light rounded-desktop-form  hover:border-dark focus:border-dark placeholder:font-Custom" placeholder="Range 6.0 - 7.0">
+                            </div>
+                            <div>
+                                <label for="last_name" class="block mb-2 text-sm font-medium text-gray-900">Enter Nitrogen level</label>
+                                <input step="0.01" required type="number" name="nitrogenLevel" class="w-full font-Custom py-[10px] px-[8px] border-2 border-dark-light rounded-desktop-form  hover:border-dark focus:border-dark placeholder:font-Custom" placeholder="Range 20 - 40 ppm">
+                            </div>
+                            <div>
+                                <label for="company" class="block mb-2 text-sm font-medium text-gray-900">Enter phosphorus level</label>
+                                <input step="0.01" required type="number" name="phosphorusLevel" class="w-full font-Custom py-[10px] px-[8px] border-2 border-dark-light rounded-desktop-form  hover:border-dark focus:border-dark placeholder:font-Custom" placeholder="Range 30 - 50 ppm">
+                            </div>  
+                            <div>
+                                <label for="phone" class="block mb-2 text-sm font-medium text-gray-900">Enter potassium level</label>
+                                <input step="0.01" required type="number" name="potassiumLevel" class="w-full font-Custom py-[10px] px-[8px] border-2 border-dark-light rounded-desktop-form  hover:border-dark focus:border-dark placeholder:font-Custom" placeholder="Range 100 - 150 ppm">
+                            </div>
+                            <div>
+                                <label for="website" class="block mb-2 text-sm font-medium text-gray-900">Enter organic matter</label>
+                                <input step="0.01" required type="number" name="organicMatter" class="w-full font-Custom py-[10px] px-[8px] border-2 border-dark-light rounded-desktop-form  hover:border-dark focus:border-dark placeholder:font-Custom" placeholder="Range 3 - 5">
+                            </div>
+                            <div>
+                                <label for="visitors" class="block mb-2 text-sm font-medium text-gray-900">Enter bulk density</label>
+                                <input step="0.01" required type="number" name="bulkDensity" class="w-full font-Custom py-[10px] px-[8px] border-2 border-dark-light rounded-desktop-form  hover:border-dark focus:border-dark placeholder:font-Custom" placeholder="Range 1.1 - 1.6 g/cm³">
+                            </div>
+                            <div>
+                                <label for="first_name" class="block mb-2 text-sm font-medium text-gray-900">Enter soil moisture</label>
+                                <input step="0.01" required type="number" name="soilMoisture" class="w-full font-Custom py-[10px] px-[8px] border-2 border-dark-light rounded-desktop-form  hover:border-dark focus:border-dark placeholder:font-Custom" placeholder="Range 25 - 50 %">
+                            </div>
+                            <div>
+                                <label for="first_name" class="block mb-2 text-sm font-medium text-gray-900">Enter microbial activity level</label>
+                                <input step="0.01" required type="number" name="microbialLevel" class="w-full font-Custom py-[10px] px-[8px] border-2 border-dark-light rounded-desktop-form  hover:border-dark focus:border-dark placeholder:font-Custom" placeholder="CO2 respiration rate > 10">
+                            </div>
+                            <div>
+                                <label for="first_name" class="block mb-2 text-sm font-medium text-gray-900">Enter electrical conductivity</label>
+                                <input step="0.01" required type="number" name="electricalConductivity" class="w-full font-Custom py-[10px] px-[8px] border-2 border-dark-light rounded-desktop-form  hover:border-dark focus:border-dark placeholder:font-Custom" placeholder="dS/m < 4">
+                            </div>
+                            <div>
+                                <label for="first_name" class="block mb-2 text-sm font-medium text-gray-900">Enter infiltration rate</label>
+                                <input step="0.01" required type="number" name="infiltrationRate" class="w-full font-Custom py-[10px] px-[8px] border-2 border-dark-light rounded-desktop-form  hover:border-dark focus:border-dark placeholder:font-Custom" placeholder="inches/hour > 1">
+                            </div>
+                            <div>
+                                <label for="first_name" class="block mb-2 text-sm font-medium text-gray-900">Enter soil temperature</label>
+                                <input step="0.01" required type="number" name="soilTemperature" class="w-full font-Custom py-[10px] px-[8px] border-2 border-dark-light rounded-desktop-form  hover:border-dark focus:border-dark placeholder:font-Custom" placeholder="Range 15 - 30 °C">
+                            </div>
+                            <div>
+                                <label for="first_name" class="block mb-2 text-sm font-medium text-gray-900">Enter soil compaction</label>
+                                <input step="0.01" required type="number" name="soilCompaction" class="w-full font-Custom py-[10px] px-[8px] border-2 border-dark-light rounded-desktop-form  hover:border-dark focus:border-dark placeholder:font-Custom" placeholder="psi < 300">
+                            </div>
+                            
+
+                            <div>
+                                <label for="first_name" class="block mb-2 text-sm font-medium text-gray-900">Enter cation exchange capacity</label>
+                                <input step="0.01" required type="number" name="cationExchange" class="w-full font-Custom py-[10px] px-[8px] border-2 border-dark-light rounded-desktop-form  hover:border-dark focus:border-dark placeholder:font-Custom" placeholder="Range meq/100g (10-40)">
+                            </div>
+    
+                            <div>
+                                <label for="first_name" class="block mb-2 text-sm font-medium text-gray-900">Enter heavy metal contamination</label>
+                                <input step="0.01" required type="number" name="heavyContamination" class="w-full font-Custom py-[10px] px-[8px] border-2 border-dark-light rounded-desktop-form  hover:border-dark focus:border-dark placeholder:font-Custom" placeholder="ppm < 100">
+                            </div>
+                        </div>
+                        <div class="flex justify-center items-center">
+                            <button id="soil_health_btn" type="submit" class="inline-flex w-3/6 justify-center items-center py-3 px-5 text-base font-medium text-black rounded-lg bg-secondary hover:bg-secondary">Verify Soil Health</button>
+                        </div>
+                    </form>
+                </div>
+            </div>
+        </div>
+
+        <div id="data" class="mt-5 tab-content hidden">
+            <div class="grid grid-cols-12">
+                <div class="col-span-8">
+                    <form action="/crop_recommendation" method="post" class="p-5">
+                        <div class="grid gap-6 mb-6 md:grid-cols-3">
+                            <div>
+                                <label for="first_name" class="block mb-2 text-sm font-medium text-gray">Nitrogen Value</label>
+                                <input step="0.01" required type="number" name="nitrogen" class="w-full font-Custom py-[10px] px-[8px] border-2 border-dark-light rounded-desktop-form  hover:border-dark focus:border-dark placeholder:font-Custom" placeholder="Enter Nitrogen Value">
+                            </div>
+                            <div>
+                                <label for="last_name" class="block mb-2 text-sm font-medium text-gray-900">Phosphorus value</label>
+                                <input step="0.01" required type="number" name="phosphorus" class="w-full font-Custom py-[10px] px-[8px] border-2 border-dark-light rounded-desktop-form  hover:border-dark focus:border-dark placeholder:font-Custom" placeholder="Enter Phosphorus Level">
+                            </div>
+                            <div>
+                                <label for="company" class="block mb-2 text-sm font-medium text-gray-900">Potassium value</label>
+                                <input step="0.01" required type="number" name="potassium" class="w-full font-Custom py-[10px] px-[8px] border-2 border-dark-light rounded-desktop-form  hover:border-dark focus:border-dark placeholder:font-Custom" placeholder="Enter Potassium Level">
+                            </div>
+                            <div>
+                                <label for="phone" class="block mb-2 text-sm font-medium text-gray-900">Temperature</label>
+                                <input step="0.01" required type="number" name="temperature" class="w-full font-Custom py-[10px] px-[8px] border-2 border-dark-light rounded-desktop-form  hover:border-dark focus:border-dark placeholder:font-Custom" placeholder="Enter Temperature">
+                            </div>
+                            <div>
+                                <label for="phone" class="block mb-2 text-sm font-medium text-gray-900">Humidity Level</label>
+                                <input step="0.01" required type="number" name="humidity" class="w-full font-Custom py-[10px] px-[8px] border-2 border-dark-light rounded-desktop-form  hover:border-dark focus:border-dark placeholder:font-Custom" placeholder="Enter Humidity Level">
+                            </div>
+                            <div>
+                                <label for="phone" class="block mb-2 text-sm font-medium text-gray-900">pH level</label>
+                                <input step="0.01" required type="number" name="ph_level" class="w-full font-Custom py-[10px] px-[8px] border-2 border-dark-light rounded-desktop-form  hover:border-dark focus:border-dark placeholder:font-Custom" placeholder="Enter pH value">
+                            </div>
+                            <div>
+                                <label for="phone" class="block mb-2 text-sm font-medium text-gray-900">Rainfall</label>
+                                <input step="0.01" required type="number" name="rainfall" class="w-full font-Custom py-[10px] px-[8px] border-2 border-dark-light rounded-desktop-form  hover:border-dark focus:border-dark placeholder:font-Custom" placeholder="Enter Rainfall Level">
+                            </div>
+                            <div>
+                                <label for="phone" class="block mb-2 text-sm font-medium text-gray-900">Crop rotation factor</label>
+                                <input step="0.01" required type="number" name="crop_rotation" class="w-full font-Custom py-[10px] px-[8px] border-2 border-dark-light rounded-desktop-form  hover:border-dark focus:border-dark placeholder:font-Custom" placeholder="No of Crop Rotation">
+                            </div>
+                            <div>
+                                <label for="phone" class="block mb-2 text-sm font-medium text-gray-900">Average soil quality</label>
+                                <input step="0.01" required type="number" name="soil_quality" class="w-full font-Custom py-[10px] px-[8px] border-2 border-dark-light rounded-desktop-form  hover:border-dark focus:border-dark placeholder:font-Custom" placeholder="Enter Soil Quality">
+                            </div>
+                        </div>
+                        <div class="flex justify-center">
+                            <button id="field_analysis" type="submit" class="inline-flex w-3/6 mx-auto justify-center items-center py-3 px-5 text-base font-medium text-black rounded-lg bg-secondary hover:bg-secondary">Analysis your field</button>
+                        </div>
+                    </form>                    
+                </div>
+
+                <div class="col-span-4">
+                    <img src="/registion_img.svg" alt="background-image" class="w-[400px] h-[400px]">
+                </div>
+            </div>
+        </div>
+
+        
+
+
+
+
+        <script>
+            const price_link=document.getElementById("price")
+            price_link.addEventListener('click',()=>{
+                location.href="https://madrasmandi.in/products"
+            })
+        </script>
+
+
+
+
+
+
+
+        <script>
+            function toggleTranslate() {
+                const googleElement = document.getElementById('google_element');
+                if (googleElement.style.display === 'none') {
+                    googleElement.style.display = 'block';  // Show the translate element
+                } else {
+                    googleElement.style.display = 'none';   // Hide the translate element
+                }
+            }
+        </script>
+        
+        <!-- scroll -->
+        <script>
+            // Smooth scrolling behavior for anchor links
+            document.querySelectorAll('a[href^="#"]').forEach(anchor => {
+                anchor.addEventListener('click', function(e) {
+                    e.preventDefault();
+    
+                    const target = document.querySelector(this.getAttribute('href'));
+    
+                    if (target) {
+                        target.scrollIntoView({
+                            behavior: 'smooth'
+                        });
+                    }
+                });
+            });
+        </script>
+
+
+
+        <script>
+            document.querySelectorAll('.tab-link').forEach(link => {
+                link.addEventListener('click', function (e) {
+                    e.preventDefault();
+                    
+                    // Hide all tab contents
+                    document.querySelectorAll('.tab-content').forEach(content => {
+                        content.classList.add('hidden');
+                    });
+                    
+                    // Remove active class from all links
+                    document.querySelectorAll('.tab-link').forEach(link => {
+                        link.classList.remove('bg-secondary', 'text-gray-900');
+                        link.classList.add('bg-gray-200');
+                    });
+                    
+                    // Show the clicked tab's content
+                    const target = document.getElementById(this.getAttribute('data-target'));
+                    target.classList.remove('hidden');
+                    
+                    // Add active styles to clicked link
+                    this.classList.add('bg-secondary', 'text-gray-900');
+                    this.classList.remove('bg-gray-200');
+                });
+            });
+        </script>   
+        <script src="https://translate.google.com/translate_a/element.js?cb=loadGoogleTranslate"></script>
+        <script>
+            function loadGoogleTranslate(){
+                new google.translate.TranslateElement(
+                    "google_element"
+                );
+            }
+        </script>
+        <script>
+            window.onload = loadGoogleTranslate;
+        </script>
+
+</body>
+</html>
