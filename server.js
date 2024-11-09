@@ -50,7 +50,7 @@ const predict = require('./routes/predict');
 
 
 const app = express();
-const PORT = process.env.PORT || 3000;
+const PORT = process.env.PORT || 4000;
 
 // Template engine
 app.set('view engine', 'ejs');
@@ -305,3 +305,6 @@ app.listen(PORT, (err) => {
         console.log(`Server running on PORT: ${PORT}`);
     }
 });
+
+
+module.exports =app;
