@@ -12,7 +12,7 @@
 
     <script src="https://cdn.jsdelivr.net/gh/alpinejs/alpine@v2.x.x/dist/alpine.min.js" defer></script>
     <script src="https://unpkg.com/flowbite@1.6.5/dist/flowbite.min.js"></script>
-    
+    <link rel="icon" type="image/x-icon" href="/brand_sm.svg">
 
     <script src="/js/chat_box.js" defer></script>
 </head>
@@ -56,23 +56,27 @@
 
     <!-- chat bot icon -->
     <button class="chatbot-toggler">
-        <span class="material-symbols-rounded">AI</span>
+        <span class="material-symbols-rounded">
+            <img src="/chatbot.svg" alt="AI" class="w-10 h-10 text-white">
+        </span>
         <span class="material-symbols-outlined">X</span>
     </button>
     <div class="chatbot">
         <header>
-          <h2>Plant Pal</h2>
+          <h2 class="font-serif">Plant Pal</h2>
           <span class="close-btn material-symbols-outlined"></span>
         </header>
         <ul class="chatbox">
           <li class="chat incoming">
             <span class="material-symbols-outlined">AI</span>
-            <p>Hi there! <br>I'm Plant Pal. How can I assist you today?</p>
+            <p class="font-sans">Hi there! <br>I'm Plant Pal. How can I assist you today?</p>
           </li>
         </ul>
         <div class="chat-input">
           <textarea placeholder="Enter a message..." spellcheck="false" required></textarea>
-          <span id="send-btn" class="material-symbols-rounded">send</span>
+          <span id="send-btn" class="material-symbols-rounded">
+            <img src="/send.svg" class="w-8 h-8">
+          </span>
         </div>
     </div>
 

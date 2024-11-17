@@ -11,6 +11,7 @@ const session = require('express-session');
 const {exec}=require('child_process')
 const {readFile}=require('fs')
 
+
 require('dotenv').config();
 
 
@@ -50,13 +51,13 @@ const predict = require('./routes/predict');
 
 
 const app = express();
-const PORT = process.env.PORT || 4000;
+const PORT = process.env.PORT || 3000;
 
 // Template engine
 app.set('view engine', 'ejs');
 
 // Static files
-app.use(express.static('src'));
+app.use(express.static(__dirname+'/src'));
 app.use(express.static('public'));
 app.use(cors());
 

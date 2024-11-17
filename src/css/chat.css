@@ -26,7 +26,7 @@ body {
   transition: all 0.2s ease;
 }
 body.show-chatbot .chatbot-toggler {
-  transform: rotate(90deg);
+  transform: rotate(180deg);
 }
 .chatbot-toggler span {
   color: #fff;

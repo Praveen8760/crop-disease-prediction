@@ -4,7 +4,10 @@
   "description": "",
   "main": "index.js",
   "scripts": {
-    "test": "echo \"Error: no test specified\" && exit 1"
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "start": "node server.js",
+    "build:css": "npx tailwindcss -i ./src/css/input.css -o ./src/css/output.css",
+    "build": "npm run build:css && node server.js"
   },
   "keywords": [],
   "author": "",
@@ -26,6 +29,7 @@
     "passport": "^0.7.0",
     "passport-local": "^1.0.0",
     "tailwindcss": "^3.4.13",
-    "tfjs-tflite-node": "^0.0.2"
+    "tfjs-tflite-node": "^0.0.2",
+    "vercel": "^39.0.2"
   }
 }
