@@ -3,16 +3,15 @@ const multer = require('multer');
 const fss = require('fs/promises');
 const fs=require('fs')
 
-const bodyParser = require('body-parser');
+
 const cors = require('cors');
-const cookieParser = require('cookie-parser');
-const session = require('express-session');
+
 
 const {exec}=require('child_process')
 const {readFile}=require('fs')
 
 
-require('dotenv').config();
+
 
 
 
@@ -63,18 +62,8 @@ app.use(cors());
 
 // Middleware
 app.use(express.json());
-app.use(bodyParser.json());
-app.use(bodyParser.urlencoded({ extended: true }));
+
 app.use(express.urlencoded({ extended: true }));
-app.use(cookieParser("Agriculture_AI_System"));
-app.use(session({
-    secret: "Agriculture AI",
-    saveUninitialized: true,
-    resave: true,
-    cookie: {
-        maxAge: 1000 * 60 * 60 * 24, // 1 day
-    },
-}));
 
 // Routes middleware
 app.use('/', chatAI);
